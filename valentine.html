@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Valentine 💘</title>
+
+<style>
+:root{
+  --bg1:#ffd6e7;
+  --bg2:#f7b3d5;
+  --text:#b1155a;
+  --card:#ffeaf3;
+  --btn:#ff3b7b;
+  --btn2:#ff7aa8;
+  --ink:#7a0d3d;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg, var(--bg1), var(--bg2));
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color:var(--text);
+  overflow:hidden;
+}
+
+/* Floating hearts */
+.heart{
+  position:absolute;
+  width:14px; height:14px;
+  background:#ff4f8e;
+  transform: rotate(45deg);
+  opacity:.18;
+  animation: floatUp linear infinite;
+  pointer-events:none;
+}
+.heart::before,.heart::after{
+  content:"";
+  position:absolute;
+  width:14px;height:14px;
+  background:#ff4f8e;
+  border-radius:50%;
+}
+.heart::before{ left:-7px; top:0; }
+.heart::after{ left:0; top:-7px; }
+
+@keyframes floatUp{
+  from{ transform: translateY(30vh) rotate(45deg); }
+  to{ transform: translateY(-120vh) rotate(45deg); }
+}
+
+.card{
+  background:var(--card);
+  border-radius:22px;
+  padding:30px;
+  width:min(620px, 92vw);
+  text-align:center;
+  box-shadow:0 20px 40px rgba(0,0,0,.2);
+}
+
+.title{
+  font-weight:900;
+  letter-spacing:.06em;
+  text-transform:lowercase;
+  font-size:22px;
+  margin-bottom:12px;
+  color:var(--ink);
+}
+
+.subtitle{
+  margin: 6px 0 14px;
+  font-size:14px;
+  opacity:.9;
+  color:var(--ink);
+}
+
+.picFrame{
+  width:min(340px, 78vw);
+  aspect-ratio:1/1;
+  margin:0 auto 18px;
+  border-radius:18px;
+  overflow:hidden;
+  position:relative;
+  box-shadow:0 12px 26px rgba(0,0,0,.12);
+}
+.picFrame img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.overlayText{
+  position:absolute;
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+  background:rgba(0,0,0,.6);
+  color:#fff;
+  padding:6px 12px;
+  border-radius:999px;
+  font-weight:800;
+  font-size:12px;
+  text-transform:uppercase;
+}
+
+.buttons{
+  display:flex;
+  justify-content:center;
+  gap:14px;
+  margin-top:10px;
+  flex-wrap:wrap;
+}
+
+button{
+  border:none;
+  border-radius:999px;
+  padding:12px 18px;
+  font-weight:900;
+  cursor:pointer;
+  transition:.12s ease;
+}
+
+button:active{ transform:scale(.97); }
+
+.yes{
+  background:var(--btn);
+  color:#fff;
+}
+
+.alt{
+  background:var(--btn2);
+  color:#fff;
+}
+
+.no{
+  background:#fff;
+  color:var(--text);
+  border:2px solid rgba(177,21,90,.55);
+  position:relative;
+}
+
+.footer{
+  margin-top:14px;
+  font-size:14px;
+  color:var(--ink);
+}
+
+.page{ display:none; }
+.page.active{ display:block; }
+
+.options{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:12px;
+  margin-top:12px;
+}
+@media (max-width:420px){
+  .options{ grid-template-columns: 1fr; }
+}
+
+.choice{
+  background:#fff;
+  border:2px solid rgba(177,21,90,.18);
+  color:var(--ink);
+}
+
+.blurb{
+  text-align:left;
+  background: rgba(255,255,255,.65);
+  border:1px solid rgba(177,21,90,.18);
+  padding:14px;
+  border-radius:16px;
+  color:var(--ink);
+  line-height:1.5;
+  font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<audio id="bgMusic" src="luther.mp3" loop></audio>
+
+<script>
+for(let i=0;i<18;i++){
+  const h=document.createElement('div');
+  h.className='heart';
+  h.style.left=Math.random()*100+'vw';
+  h.style.animationDuration=(5+Math.random()*8)+'s';
+  h.style.animationDelay=Math.random()*-10+'s';
+  document.body.appendChild(h);
+}
+</script>
+
+<div class="card">
+
+<section class="page active" id="p1">
+  <div class="title">will you be my valentine?</div>
+  <div class="picFrame">
+    <img src="us.jpg">
+    <div class="overlayText">pretty please</div>
+  </div>
+  <div class="buttons">
+    <button class="yes" id="yes1">Yes my love</button>
+    <button class="no" id="noBtn">no nigga</button>
+  </div>
+  <div class="footer">from the love of your life 💌</div>
+</section>
+
+<section class="page" id="p2">
+  <div class="title">perfect! it's a date!</div>
+  <div class="subtitle">now what will you be cooking for us?</div>
+  <div class="options">
+    <button class="choice" data-food="Pancakes">🥞 Pancakes</button>
+    <button class="choice" data-food="Lamb chops">🍖 Lamb chops</button>
+    <button class="choice" data-food="Burgers">🍔 Burgers</button>
+    <button class="choice" data-food="Tacos">🌮 Tacos</button>
+  </div>
+</section>
+
+<section class="page" id="p3">
+  <div class="title">thanks baby 💘</div>
+  <div class="subtitle" id="foodLine"></div>
+  <div class="picFrame">
+    <img src="me.jpg">
+    <div class="overlayText">your favorite</div>
+  </div>
+  <div class="footer">Don't worry my love, i will have a meal ready for you to eat too 😇</div>
+  <div class="buttons">
+    <button class="alt" id="nextLove">next 😌</button>
+  </div>
+</section>
+
+<section class="page" id="p4">
+  <div class="title">but first…</div>
+  <div class="subtitle">can i tell you what i love about you?</div>
+  <div class="buttons">
+    <button class="yes" id="yes2">yes my love</button>
+  </div>
+</section>
+
+<section class="page" id="p5">
+  <div class="title">okay here it goes 🥺</div>
+  <div class="picFrame">
+    <img src="love.jpg">
+    <div class="overlayText">my favorite person</div>
+  </div>
+  <div class="blurb">
+    I love how funny and smart you are. I love how honest you are.
+    I love how caring and supportive you are. I love how handsome you are.
+    I love how ambitious and diligent you are. I love how confident and brave you are.
+    I love how real you are. I love how you love me.
+    I love everything about you. I love loving you.
+  </div>
+  <div class="buttons">
+    <button class="yes" id="ohBaby">oh baby!</button>
+  </div>
+</section>
+
+<section class="page" id="p6">
+  <div class="title">i cant wait to spend valentines day with you 💘</div>
+  <div class="picFrame">
+    <img src="final.jpg">
+    <div class="overlayText">my forever</div>
+  </div>
+  <div class="footer">thank you for being my valentine 🤍</div>
+</section>
+
+</div>
+
+<script>
+const pages = document.querySelectorAll(".page");
+function showPage(id){
+  pages.forEach(p => p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+const music = document.getElementById("bgMusic");
+
+document.getElementById("yes1").onclick = () => {
+  showPage("p2");
+  music.play();
+};
+
+function moveNoButton(){
+  const btn = document.getElementById("noBtn");
+  const padding = 20;
+  const x = Math.random()*(window.innerWidth - btn.offsetWidth - padding);
+  const y = Math.random()*(window.innerHeight - btn.offsetHeight - padding);
+  btn.style.position="fixed";
+  btn.style.left = x+"px";
+  btn.style.top = y+"px";
+}
+const noBtn = document.getElementById("noBtn");
+noBtn.addEventListener("mouseenter", moveNoButton);
+noBtn.addEventListener("click", e => { e.preventDefault(); moveNoButton(); });
+noBtn.addEventListener("touchstart", e => { e.preventDefault(); moveNoButton(); });
+
+document.querySelectorAll(".choice").forEach(btn=>{
+  btn.onclick = ()=>{
+    document.getElementById("foodLine").textContent =
+      `you picked "${btn.dataset.food}" — i can't wait.`;
+    showPage("p3");
+  };
+});
+
+document.getElementById("nextLove").onclick = ()=> showPage("p4");
+document.getElementById("yes2").onclick = ()=> showPage("p5");
+document.getElementById("ohBaby").onclick = ()=> showPage("p6");
+</script>
+
+</body>
+</html>
